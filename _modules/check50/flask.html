@@ -1,0 +1,396 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>check50.flask &mdash; check50  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> check50
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">API docs</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../api.html#check50">check50</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api.html#module-check50.c">check50.c</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api.html#module-check50.flask">check50.flask</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api.html#module-check50.py">check50.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api.html#module-check50.internal">check50.internal</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../check_writer.html">Writing check50 checks</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../check_writer.html#creating-a-git-repo">Creating a git repo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../check_writer.html#creating-a-check-and-running-it">Creating a check and running it</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../check_writer.html#simple-yaml-checks">Simple YAML checks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../check_writer.html#developing-locally">Developing locally</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../check_writer.html#getting-started-with-python-checks">Getting started with Python checks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../check_writer.html#python-check-specification">Python check specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../check_writer.html#python-check-examples">Python check examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../check_writer.html#configuring-check50">Configuring check50</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../check_writer.html#checks">checks:</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../check_writer.html#files">files:</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../check_writer.html#dependencies">dependencies:</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../check_writer.html#internationalizing-checks">Internationalizing checks</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../extension_writer.html">Writing check50 extensions</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">check50</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>check50.flask</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for check50.flask</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">pathlib</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">urllib.parse</span> <span class="k">as</span> <span class="nn">url</span>
+
+<span class="kn">from</span> <span class="nn">bs4</span> <span class="k">import</span> <span class="n">BeautifulSoup</span>
+
+<span class="kn">from</span> <span class="nn">.api</span> <span class="k">import</span> <span class="n">log</span><span class="p">,</span> <span class="n">Failure</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">internal</span>
+
+
+<div class="viewcode-block" id="app"><a class="viewcode-back" href="../../api.html#check50.flask.app">[docs]</a><span class="k">class</span> <span class="nc">app</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Spawn a Flask app.</span>
+
+<span class="sd">    :param path: path to python file containing Flask app</span>
+<span class="sd">    :param app_name: name of Flask app in file</span>
+<span class="sd">    :type path: str</span>
+<span class="sd">    :type env: str</span>
+
+<span class="sd">    Example usage::</span>
+
+<span class="sd">        check50.flask.app(&quot;application.py&quot;).get(&quot;/&quot;).status(200)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">app_name</span><span class="o">=</span><span class="s2">&quot;app&quot;</span><span class="p">):</span>
+
+        <span class="n">path</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">path</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span>
+
+        <span class="c1"># Add directory of flask app to sys.path so we can import it properly</span>
+        <span class="n">prevpath</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">parent</span><span class="p">)</span>
+            <span class="n">mod</span> <span class="o">=</span> <span class="n">internal</span><span class="o">.</span><span class="n">import_file</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">stem</span><span class="p">,</span> <span class="n">path</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">Failure</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;could not find </span><span class="si">{}</span><span class="s2">&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="c1"># Restore sys.path</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">prevpath</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">app</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">mod</span><span class="p">,</span> <span class="n">app_name</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">Failure</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> does not contain an app&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">file</span><span class="p">))</span>
+
+        <span class="n">app</span><span class="o">.</span><span class="n">testing</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="c1"># Initialize flask client</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_client</span> <span class="o">=</span> <span class="n">app</span><span class="o">.</span><span class="n">test_client</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">response</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="app.get"><a class="viewcode-back" href="../../api.html#check50.flask.app.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">route</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">follow_redirects</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Send GET request to app.</span>
+
+<span class="sd">        :param route: route to send request to</span>
+<span class="sd">        :type route: str</span>
+<span class="sd">        :param data: form data to include in request</span>
+<span class="sd">        :type data: dict</span>
+<span class="sd">        :param params: URL parameters to include in request</span>
+<span class="sd">        :param follow_redirects: enable redirection (defaults to ``True``)</span>
+<span class="sd">        :type follow_redirects: bool</span>
+<span class="sd">        :returns: ``self``</span>
+<span class="sd">        :raises check50.Failure: if Flask application throws an uncaught exception</span>
+
+<span class="sd">        Example usage::</span>
+
+<span class="sd">            check50.flask.app(&quot;application.py&quot;).get(&quot;/buy&quot;, params={&quot;q&quot;: &quot;02138&quot;}).content()</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_send</span><span class="p">(</span><span class="s2">&quot;GET&quot;</span><span class="p">,</span> <span class="n">route</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">follow_redirects</span><span class="o">=</span><span class="n">follow_redirects</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="app.post"><a class="viewcode-back" href="../../api.html#check50.flask.app.post">[docs]</a>    <span class="k">def</span> <span class="nf">post</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">route</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">follow_redirects</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Send POST request to app.</span>
+
+<span class="sd">        :param route: route to send request to</span>
+<span class="sd">        :type route: str</span>
+<span class="sd">        :param data: form data to include in request</span>
+<span class="sd">        :type data: dict</span>
+<span class="sd">        :param params: URL parameters to include in request</span>
+<span class="sd">        :param follow_redirects: enable redirection (defaults to ``True``)</span>
+<span class="sd">        :type follow_redirects: bool</span>
+<span class="sd">        :raises check50.Failure: if Flask application throws an uncaught exception</span>
+
+<span class="sd">        Example usage::</span>
+
+<span class="sd">            check50.flask.app(&quot;application.py&quot;).post(&quot;/buy&quot;, data={&quot;symbol&quot;: &quot;GOOG&quot;, &quot;shares&quot;: 10}).status(200)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_send</span><span class="p">(</span><span class="s2">&quot;POST&quot;</span><span class="p">,</span> <span class="n">route</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">follow_redirects</span><span class="o">=</span><span class="n">follow_redirects</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="app.status"><a class="viewcode-back" href="../../api.html#check50.flask.app.status">[docs]</a>    <span class="k">def</span> <span class="nf">status</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">code</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Check status code in response returned by application.</span>
+<span class="sd">        If ``code`` is not None, assert that ``code`` is returned by application,</span>
+<span class="sd">        else simply return the status code.</span>
+
+<span class="sd">        :param code: ``code`` to assert that application returns</span>
+<span class="sd">        :type code: int</span>
+
+<span class="sd">        Example usage::</span>
+
+<span class="sd">            check50.flask.app(&quot;application.py&quot;).status(200)</span>
+
+<span class="sd">            status = check50.flask.app(&quot;application.py&quot;).get(&quot;/&quot;).status()</span>
+<span class="sd">            if status != 200:</span>
+<span class="sd">                raise check50.Failure(f&quot;expected status code 200, but got {status}&quot;)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">code</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span>
+
+        <span class="n">log</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;checking that status code </span><span class="si">{}</span><span class="s2"> is returned...&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">code</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">code</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">Failure</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;expected status code </span><span class="si">{}</span><span class="s2">, but got </span><span class="si">{}</span><span class="s2">&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="n">code</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="p">))</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+<div class="viewcode-block" id="app.raw_content"><a class="viewcode-back" href="../../api.html#check50.flask.app.raw_content">[docs]</a>    <span class="k">def</span> <span class="nf">raw_content</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">str_output</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Searches for `output` regex match within content of page, regardless of mimetype.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_search_page</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">str_output</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">regex</span><span class="p">,</span> <span class="n">content</span><span class="p">:</span> <span class="n">regex</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">content</span><span class="o">.</span><span class="n">decode</span><span class="p">()))</span></div>
+
+<div class="viewcode-block" id="app.content"><a class="viewcode-back" href="../../api.html#check50.flask.app.content">[docs]</a>    <span class="k">def</span> <span class="nf">content</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">str_output</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Searches for `output` regex within HTML page. kwargs are passed to BeautifulSoup&#39;s find function to filter for tags.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">mimetype</span> <span class="o">!=</span> <span class="s2">&quot;text/html&quot;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">Failure</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;expected request to return HTML, but it returned </span><span class="si">{}</span><span class="s2">&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">mimetype</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_search_page</span><span class="p">(</span>
+            <span class="n">output</span><span class="p">,</span>
+            <span class="n">str_output</span><span class="p">,</span>
+            <span class="n">BeautifulSoup</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="s2">&quot;html.parser&quot;</span><span class="p">),</span>
+            <span class="k">lambda</span> <span class="n">regex</span><span class="p">,</span> <span class="n">content</span><span class="p">:</span> <span class="nb">any</span><span class="p">(</span><span class="n">regex</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">tag</span><span class="p">))</span> <span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">content</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)))</span></div>
+
+    <span class="k">def</span> <span class="nf">_send</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">method</span><span class="p">,</span> <span class="n">route</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Send request of type `method` to `route`.&quot;&quot;&quot;</span>
+        <span class="n">route</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fmt_route</span><span class="p">(</span><span class="n">route</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+        <span class="n">log</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;sending </span><span class="si">{}</span><span class="s2"> request to </span><span class="si">{}</span><span class="s2">&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">method</span><span class="o">.</span><span class="n">upper</span><span class="p">(),</span> <span class="n">route</span><span class="p">))</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">response</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="p">,</span> <span class="n">method</span><span class="o">.</span><span class="n">lower</span><span class="p">())(</span><span class="n">route</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">BaseException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>  <span class="c1"># Catch all exceptions thrown by app</span>
+            <span class="n">log</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;exception raised in application: </span><span class="si">{}</span><span class="s2">: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">e</span><span class="p">))</span>
+            <span class="k">raise</span> <span class="n">Failure</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;application raised an exception (rerun with --log for more details)&quot;</span><span class="p">))</span>
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="k">def</span> <span class="nf">_search_page</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">output</span><span class="p">,</span> <span class="n">str_output</span><span class="p">,</span> <span class="n">content</span><span class="p">,</span> <span class="n">match_fn</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">output</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">content</span>
+
+        <span class="k">if</span> <span class="n">str_output</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">str_output</span> <span class="o">=</span> <span class="n">output</span>
+
+        <span class="n">log</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;checking that </span><span class="se">\&quot;</span><span class="si">{}</span><span class="se">\&quot;</span><span class="s2"> is in page&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">str_output</span><span class="p">))</span>
+
+        <span class="n">regex</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">match_fn</span><span class="p">(</span><span class="n">regex</span><span class="p">,</span> <span class="n">content</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">Failure</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;expected to find </span><span class="se">\&quot;</span><span class="si">{}</span><span class="se">\&quot;</span><span class="s2"> in page, but it wasn&#39;t found&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">str_output</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_fmt_route</span><span class="p">(</span><span class="n">route</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+        <span class="n">parsed</span> <span class="o">=</span> <span class="n">url</span><span class="o">.</span><span class="n">urlparse</span><span class="p">(</span><span class="n">route</span><span class="p">)</span>
+
+        <span class="c1"># Convert params dict into urlencoded string</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="n">url</span><span class="o">.</span><span class="n">urlencode</span><span class="p">(</span><span class="n">params</span><span class="p">)</span> <span class="k">if</span> <span class="n">params</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span>
+
+        <span class="c1"># Concatenate params</span>
+        <span class="n">param_str</span> <span class="o">=</span> <span class="s2">&quot;&amp;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">((</span><span class="n">ps</span> <span class="k">for</span> <span class="n">ps</span> <span class="ow">in</span> <span class="p">[</span><span class="n">params</span><span class="p">,</span> <span class="n">parsed</span><span class="o">.</span><span class="n">query</span><span class="p">]</span> <span class="k">if</span> <span class="n">ps</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">param_str</span><span class="p">:</span>
+            <span class="n">param_str</span> <span class="o">=</span> <span class="s2">&quot;?&quot;</span> <span class="o">+</span> <span class="n">param_str</span>
+
+        <span class="c1"># Only display netloc if it isn&#39;t localhost</span>
+        <span class="k">return</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">parsed</span><span class="o">.</span><span class="n">netloc</span> <span class="k">if</span> <span class="n">parsed</span><span class="o">.</span><span class="n">netloc</span> <span class="o">!=</span> <span class="s2">&quot;localhost&quot;</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">parsed</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="n">param_str</span><span class="p">])</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, CS50.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

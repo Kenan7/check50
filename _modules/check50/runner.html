@@ -1,0 +1,459 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>check50.runner &mdash; check50  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> check50
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">API docs</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../api.html#check50">check50</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api.html#module-check50.c">check50.c</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api.html#module-check50.flask">check50.flask</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api.html#module-check50.py">check50.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api.html#module-check50.internal">check50.internal</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../check_writer.html">Writing check50 checks</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../check_writer.html#creating-a-git-repo">Creating a git repo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../check_writer.html#creating-a-check-and-running-it">Creating a check and running it</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../check_writer.html#simple-yaml-checks">Simple YAML checks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../check_writer.html#developing-locally">Developing locally</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../check_writer.html#getting-started-with-python-checks">Getting started with Python checks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../check_writer.html#python-check-specification">Python check specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../check_writer.html#python-check-examples">Python check examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../check_writer.html#configuring-check50">Configuring check50</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../check_writer.html#checks">checks:</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../check_writer.html#files">files:</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../check_writer.html#dependencies">dependencies:</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../check_writer.html#internationalizing-checks">Internationalizing checks</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../extension_writer.html">Writing check50 extensions</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">check50</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>check50.runner</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for check50.runner</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">collections</span>
+<span class="kn">from</span> <span class="nn">contextlib</span> <span class="k">import</span> <span class="n">contextmanager</span>
+<span class="kn">import</span> <span class="nn">concurrent.futures</span> <span class="k">as</span> <span class="nn">futures</span>
+<span class="kn">import</span> <span class="nn">enum</span>
+<span class="kn">import</span> <span class="nn">functools</span>
+<span class="kn">import</span> <span class="nn">inspect</span>
+<span class="kn">import</span> <span class="nn">importlib</span>
+<span class="kn">import</span> <span class="nn">gettext</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="k">import</span> <span class="n">Path</span>
+<span class="kn">import</span> <span class="nn">shutil</span>
+<span class="kn">import</span> <span class="nn">signal</span>
+<span class="kn">import</span> <span class="nn">tempfile</span>
+<span class="kn">import</span> <span class="nn">traceback</span>
+
+<span class="kn">import</span> <span class="nn">attr</span>
+
+<span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">internal</span>
+<span class="kn">from</span> <span class="nn">.api</span> <span class="k">import</span> <span class="n">log</span><span class="p">,</span> <span class="n">Failure</span><span class="p">,</span> <span class="n">_copy</span><span class="p">,</span> <span class="n">_log</span><span class="p">,</span> <span class="n">_data</span>
+
+<span class="n">_check_names</span> <span class="o">=</span> <span class="p">[]</span>
+
+
+<span class="k">class</span> <span class="nc">Status</span><span class="p">(</span><span class="n">enum</span><span class="o">.</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="n">Pass</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">Fail</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">Skip</span> <span class="o">=</span> <span class="kc">None</span>
+
+
+<span class="nd">@attr</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">slots</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">CheckResult</span><span class="p">:</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">()</span>
+    <span class="n">description</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">()</span>
+    <span class="n">status</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">converter</span><span class="o">=</span><span class="n">Status</span><span class="p">)</span>
+    <span class="n">log</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="p">[])</span>
+    <span class="n">cause</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="p">{})</span>
+    <span class="n">dependency</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_check</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">check</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">check</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="n">_</span><span class="p">(</span><span class="n">check</span><span class="o">.</span><span class="vm">__doc__</span><span class="p">),</span>
+                   <span class="n">dependency</span><span class="o">=</span><span class="n">check</span><span class="o">.</span><span class="n">_check_dependency</span><span class="o">.</span><span class="vm">__name__</span> <span class="k">if</span> <span class="n">check</span><span class="o">.</span><span class="n">_check_dependency</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+                   <span class="o">*</span><span class="n">args</span><span class="p">,</span>
+                   <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">Timeout</span><span class="p">(</span><span class="n">Failure</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">seconds</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">rationale</span><span class="o">=</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;check timed out after </span><span class="si">{}</span><span class="s2"> seconds&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">seconds</span><span class="p">))</span>
+
+
+<span class="nd">@contextmanager</span>
+<span class="k">def</span> <span class="nf">_timeout</span><span class="p">(</span><span class="n">seconds</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_handle_timeout</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="n">Timeout</span><span class="p">(</span><span class="n">seconds</span><span class="p">)</span>
+
+    <span class="n">signal</span><span class="o">.</span><span class="n">signal</span><span class="p">(</span><span class="n">signal</span><span class="o">.</span><span class="n">SIGALRM</span><span class="p">,</span> <span class="n">_handle_timeout</span><span class="p">)</span>
+    <span class="n">signal</span><span class="o">.</span><span class="n">alarm</span><span class="p">(</span><span class="n">seconds</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">yield</span>
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="n">signal</span><span class="o">.</span><span class="n">alarm</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">signal</span><span class="o">.</span><span class="n">signal</span><span class="p">(</span><span class="n">signal</span><span class="o">.</span><span class="n">SIGALRM</span><span class="p">,</span> <span class="n">signal</span><span class="o">.</span><span class="n">SIG_DFL</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="check"><a class="viewcode-back" href="../../api.html#check50.check">[docs]</a><span class="k">def</span> <span class="nf">check</span><span class="p">(</span><span class="n">dependency</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">60</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Mark function as a check.</span>
+
+<span class="sd">    :param dependency: the check that this check depends on</span>
+<span class="sd">    :type dependency: function</span>
+<span class="sd">    :param timeout: maximum number of seconds the check can run</span>
+<span class="sd">    :type timeout: int</span>
+
+<span class="sd">    When a check depends on another, the former will only run if the latter passes.</span>
+<span class="sd">    Additionally, the dependent check will inherit the filesystem of its dependency.</span>
+<span class="sd">    This is particularly useful when writing e.g., a ``compiles`` check that compiles a</span>
+<span class="sd">    student&#39;s program (and checks that it compiled successfully). Any checks that run the</span>
+<span class="sd">    student&#39;s program will logically depend on this check, and since they inherit the</span>
+<span class="sd">    resulting filesystem of the check, they will immidiately have access to the compiled</span>
+<span class="sd">    program without needing to recompile.</span>
+
+<span class="sd">    Example usage::</span>
+
+<span class="sd">        @check50.check() # Mark &#39;exists&#39; as a check</span>
+<span class="sd">        def exists():</span>
+<span class="sd">            \&quot;&quot;&quot;</span><span class="n">hello</span><span class="o">.</span><span class="n">c</span> <span class="n">exists</span>\<span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">            check50.exists(&quot;hello.c&quot;)</span>
+
+<span class="s2">        @check50.check(exists) # Mark &#39;compiles&#39; as a check that depends on &#39;exists&#39;</span>
+<span class="s2">        def compiles():</span>
+<span class="s2">            </span><span class="se">\&quot;</span><span class="s2">&quot;&quot;hello.c compiles</span><span class="se">\&quot;</span><span class="s2">&quot;&quot;</span>
+<span class="s2">            check50.c.compile(&quot;hello.c&quot;)</span>
+
+<span class="s2">        @check50.check(compiles)</span>
+<span class="s2">        def prints_hello():</span>
+<span class="s2">            </span><span class="se">\&quot;</span><span class="s2">&quot;&quot;prints &quot;Hello, world!</span><span class="se">\\\\</span><span class="s2">n</span><span class="se">\&quot;</span><span class="s2">&quot;&quot;</span>
+<span class="s2">            # Since &#39;prints_hello&#39;, depends on &#39;compiles&#39; it inherits the compiled binary</span>
+<span class="s2">            check50.run(&quot;./hello&quot;).stdout(&quot;[Hh]ello, world!?</span><span class="se">\\</span><span class="s2">n&quot;, &quot;hello, world</span><span class="se">\\</span><span class="s2">n&quot;).exit()</span>
+
+<span class="s2">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">decorator</span><span class="p">(</span><span class="n">check</span><span class="p">):</span>
+
+        <span class="c1"># Modules are evaluated from the top of the file down, so _check_names will</span>
+        <span class="c1"># contain the names of the checks in the order in which they are declared</span>
+        <span class="n">_check_names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">check</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
+        <span class="n">check</span><span class="o">.</span><span class="n">_check_dependency</span> <span class="o">=</span> <span class="n">dependency</span>
+
+        <span class="nd">@functools</span><span class="o">.</span><span class="n">wraps</span><span class="p">(</span><span class="n">check</span><span class="p">)</span>
+        <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="n">checks_root</span><span class="p">,</span> <span class="n">dependency_state</span><span class="p">):</span>
+            <span class="c1"># Result template</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">CheckResult</span><span class="o">.</span><span class="n">from_check</span><span class="p">(</span><span class="n">check</span><span class="p">)</span>
+            <span class="c1"># Any shared (returned) state</span>
+            <span class="n">state</span> <span class="o">=</span> <span class="kc">None</span>
+
+            <span class="k">try</span><span class="p">:</span>
+                <span class="c1"># Setup check environment</span>
+                <span class="n">internal</span><span class="o">.</span><span class="n">run_dir</span> <span class="o">=</span> <span class="n">checks_root</span> <span class="o">/</span> <span class="n">check</span><span class="o">.</span><span class="vm">__name__</span>
+                <span class="n">src_dir</span> <span class="o">=</span> <span class="n">checks_root</span> <span class="o">/</span> <span class="p">(</span><span class="n">dependency</span><span class="o">.</span><span class="vm">__name__</span> <span class="k">if</span> <span class="n">dependency</span> <span class="k">else</span> <span class="s2">&quot;-&quot;</span><span class="p">)</span>
+                <span class="n">shutil</span><span class="o">.</span><span class="n">copytree</span><span class="p">(</span><span class="n">src_dir</span><span class="p">,</span> <span class="n">internal</span><span class="o">.</span><span class="n">run_dir</span><span class="p">)</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">internal</span><span class="o">.</span><span class="n">run_dir</span><span class="p">)</span>
+
+                <span class="c1"># Run registered functions before/after running check</span>
+                <span class="k">with</span> <span class="n">internal</span><span class="o">.</span><span class="n">register</span><span class="p">,</span> <span class="n">_timeout</span><span class="p">(</span><span class="n">seconds</span><span class="o">=</span><span class="n">timeout</span><span class="p">):</span>
+                    <span class="n">args</span> <span class="o">=</span> <span class="p">(</span><span class="n">dependency_state</span><span class="p">,)</span> <span class="k">if</span> <span class="n">inspect</span><span class="o">.</span><span class="n">getargspec</span><span class="p">(</span><span class="n">check</span><span class="p">)</span><span class="o">.</span><span class="n">args</span> <span class="k">else</span> <span class="p">()</span>
+                    <span class="n">state</span> <span class="o">=</span> <span class="n">check</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+            <span class="k">except</span> <span class="n">Failure</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">result</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="n">Status</span><span class="o">.</span><span class="n">Fail</span>
+                <span class="n">result</span><span class="o">.</span><span class="n">cause</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="n">payload</span>
+            <span class="k">except</span> <span class="ne">BaseException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">result</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="n">Status</span><span class="o">.</span><span class="n">Skip</span>
+                <span class="n">result</span><span class="o">.</span><span class="n">cause</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;rationale&quot;</span><span class="p">:</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;check50 ran into an error while running checks!&quot;</span><span class="p">)}</span>
+                <span class="n">log</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+                <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">traceback</span><span class="o">.</span><span class="n">format_tb</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">__traceback__</span><span class="p">):</span>
+                    <span class="n">log</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">())</span>
+                <span class="n">log</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;Contact sysadmins@cs50.harvard.edu with the URL of this check!&quot;</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">result</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="n">Status</span><span class="o">.</span><span class="n">Pass</span>
+            <span class="k">finally</span><span class="p">:</span>
+                <span class="n">result</span><span class="o">.</span><span class="n">log</span> <span class="o">=</span> <span class="n">_log</span>
+                <span class="n">result</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">_data</span>
+                <span class="k">return</span> <span class="n">result</span><span class="p">,</span> <span class="n">state</span>
+        <span class="k">return</span> <span class="n">wrapper</span>
+    <span class="k">return</span> <span class="n">decorator</span></div>
+
+
+<span class="c1"># Probably shouldn&#39;t be a class</span>
+<span class="k">class</span> <span class="nc">CheckRunner</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">checks_path</span><span class="p">):</span>
+
+        <span class="c1"># TODO: Naming the module &quot;checks&quot; is arbitray. Better name?</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">checks_spec</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">spec_from_file_location</span><span class="p">(</span><span class="s2">&quot;checks&quot;</span><span class="p">,</span> <span class="n">checks_path</span><span class="p">)</span>
+
+        <span class="c1"># Clear check_names, import module, then save check_names. Not thread safe.</span>
+        <span class="c1"># Ideally, there&#39;d be a better way to extract declaration order than @check mutating global state,</span>
+        <span class="c1"># but there are a lot of subtleties with using `inspect` or similar here</span>
+        <span class="n">_check_names</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="n">check_module</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">module_from_spec</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">checks_spec</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">checks_spec</span><span class="o">.</span><span class="n">loader</span><span class="o">.</span><span class="n">exec_module</span><span class="p">(</span><span class="n">check_module</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">check_names</span> <span class="o">=</span> <span class="n">_check_names</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">_check_names</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+
+        <span class="c1"># Map each check to tuples containing the names and descriptions of the checks that depend on it</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">child_map</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">defaultdict</span><span class="p">(</span><span class="nb">set</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">check</span> <span class="ow">in</span> <span class="n">inspect</span><span class="o">.</span><span class="n">getmembers</span><span class="p">(</span><span class="n">check_module</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">f</span><span class="p">:</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="s2">&quot;_check_dependency&quot;</span><span class="p">)):</span>
+            <span class="n">dependency</span> <span class="o">=</span> <span class="n">check</span><span class="o">.</span><span class="n">_check_dependency</span><span class="o">.</span><span class="vm">__name__</span> <span class="k">if</span> <span class="n">check</span><span class="o">.</span><span class="n">_check_dependency</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">child_map</span><span class="p">[</span><span class="n">dependency</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">((</span><span class="n">name</span><span class="p">,</span> <span class="n">check</span><span class="o">.</span><span class="vm">__doc__</span><span class="p">))</span>
+
+        <span class="c1"># TODO: Check for deadlocks (Khan&#39;s algorithm?)</span>
+
+    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">files</span><span class="p">,</span> <span class="n">working_area</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Run checks concurrently.</span>
+<span class="sd">        Returns a list of CheckResults ordered by declaration order of the checks in the imported module</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Ensure that dictionary is ordered by check declaration order (via self.check_names)</span>
+        <span class="c1"># NOTE: Requires CPython 3.6. If we need to support older versions of Python, replace with OrderedDict.</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="p">{</span><span class="n">name</span><span class="p">:</span> <span class="kc">None</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_names</span><span class="p">}</span>
+        <span class="n">executor</span> <span class="o">=</span> <span class="n">futures</span><span class="o">.</span><span class="n">ProcessPoolExecutor</span><span class="p">()</span>
+
+        <span class="n">checks_root</span> <span class="o">=</span> <span class="n">working_area</span><span class="o">.</span><span class="n">parent</span>
+
+        <span class="c1"># Start all checks that have no dependencies</span>
+        <span class="n">not_done</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">executor</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="n">run_check</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">checks_spec</span><span class="p">,</span> <span class="n">checks_root</span><span class="p">))</span>
+                       <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">child_map</span><span class="p">[</span><span class="kc">None</span><span class="p">])</span>
+        <span class="n">not_passed</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">while</span> <span class="n">not_done</span><span class="p">:</span>
+            <span class="n">done</span><span class="p">,</span> <span class="n">not_done</span> <span class="o">=</span> <span class="n">futures</span><span class="o">.</span><span class="n">wait</span><span class="p">(</span><span class="n">not_done</span><span class="p">,</span> <span class="n">return_when</span><span class="o">=</span><span class="n">futures</span><span class="o">.</span><span class="n">FIRST_COMPLETED</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">future</span> <span class="ow">in</span> <span class="n">done</span><span class="p">:</span>
+                <span class="n">result</span><span class="p">,</span> <span class="n">state</span> <span class="o">=</span> <span class="n">future</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+                <span class="n">results</span><span class="p">[</span><span class="n">result</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">result</span>
+                <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">status</span> <span class="ow">is</span> <span class="n">Status</span><span class="o">.</span><span class="n">Pass</span><span class="p">:</span>
+                    <span class="k">for</span> <span class="n">child_name</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">child_map</span><span class="p">[</span><span class="n">result</span><span class="o">.</span><span class="n">name</span><span class="p">]:</span>
+                        <span class="n">not_done</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">executor</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span>
+                            <span class="n">run_check</span><span class="p">(</span><span class="n">child_name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">checks_spec</span><span class="p">,</span> <span class="n">checks_root</span><span class="p">,</span> <span class="n">state</span><span class="p">)))</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">not_passed</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">not_passed</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_skip_children</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">results</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">results</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_skip_children</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">check_name</span><span class="p">,</span> <span class="n">results</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Recursively skip the children of check_name (presumably because check_name did not pass).&quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">description</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">child_map</span><span class="p">[</span><span class="n">check_name</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="n">results</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">results</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">CheckResult</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="n">_</span><span class="p">(</span><span class="n">description</span><span class="p">),</span>
+                                            <span class="n">status</span><span class="o">=</span><span class="n">Status</span><span class="o">.</span><span class="n">Skip</span><span class="p">,</span>
+                                            <span class="n">dependency</span><span class="o">=</span><span class="n">check_name</span><span class="p">,</span>
+                                            <span class="n">cause</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;rationale&quot;</span><span class="p">:</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;can&#39;t check until a frown turns upside down&quot;</span><span class="p">)})</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_skip_children</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">results</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">run_check</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Hack to get around the fact that `pickle` can&#39;t serialize closures.</span>
+<span class="sd">    This class is essentially a function that reimports the check module and runs the check.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">check_name</span><span class="p">,</span> <span class="n">spec</span><span class="p">,</span> <span class="n">checks_root</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">check_name</span> <span class="o">=</span> <span class="n">check_name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">spec</span> <span class="o">=</span> <span class="n">spec</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">checks_root</span> <span class="o">=</span> <span class="n">checks_root</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">state</span>
+
+    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">mod</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">module_from_spec</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">spec</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">spec</span><span class="o">.</span><span class="n">loader</span><span class="o">.</span><span class="n">exec_module</span><span class="p">(</span><span class="n">mod</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">mod</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_name</span><span class="p">)(</span><span class="bp">self</span><span class="o">.</span><span class="n">checks_root</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="p">)</span>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, CS50.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,642 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>check50.api &mdash; check50  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> check50
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">API docs</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../api.html#check50">check50</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api.html#module-check50.c">check50.c</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api.html#module-check50.flask">check50.flask</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api.html#module-check50.py">check50.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api.html#module-check50.internal">check50.internal</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../check_writer.html">Writing check50 checks</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../check_writer.html#creating-a-git-repo">Creating a git repo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../check_writer.html#creating-a-check-and-running-it">Creating a check and running it</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../check_writer.html#simple-yaml-checks">Simple YAML checks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../check_writer.html#developing-locally">Developing locally</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../check_writer.html#getting-started-with-python-checks">Getting started with Python checks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../check_writer.html#python-check-specification">Python check specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../check_writer.html#python-check-examples">Python check examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../check_writer.html#configuring-check50">Configuring check50</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../check_writer.html#checks">checks:</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../check_writer.html#files">files:</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../check_writer.html#dependencies">dependencies:</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../check_writer.html#internationalizing-checks">Internationalizing checks</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../extension_writer.html">Writing check50 extensions</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">check50</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>check50.api</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for check50.api</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">contextlib</span> <span class="k">import</span> <span class="n">contextmanager</span>
+<span class="kn">import</span> <span class="nn">gettext</span>
+<span class="kn">import</span> <span class="nn">pkg_resources</span>
+<span class="kn">import</span> <span class="nn">hashlib</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">shutil</span>
+<span class="kn">import</span> <span class="nn">signal</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">importlib</span>
+<span class="kn">import</span> <span class="nn">yaml</span>
+<span class="kn">import</span> <span class="nn">shlex</span>
+<span class="kn">import</span> <span class="nn">pexpect</span>
+<span class="kn">from</span> <span class="nn">pexpect.exceptions</span> <span class="k">import</span> <span class="n">EOF</span><span class="p">,</span> <span class="n">TIMEOUT</span>
+
+<span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">internal</span>
+
+<span class="n">_log</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">internal</span><span class="o">.</span><span class="n">register</span><span class="o">.</span><span class="n">before_every</span><span class="p">(</span><span class="n">_log</span><span class="o">.</span><span class="n">clear</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="log"><a class="viewcode-back" href="../../api.html#check50.log">[docs]</a><span class="k">def</span> <span class="nf">log</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Add to check log</span>
+
+<span class="sd">    :param line: line to be added to the check log</span>
+<span class="sd">    :type line: str</span>
+
+<span class="sd">    The check log is student-visible via the ``--log`` flag to ``check50``.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_log</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line</span><span class="p">)</span></div>
+
+
+<span class="n">_data</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">internal</span><span class="o">.</span><span class="n">register</span><span class="o">.</span><span class="n">before_every</span><span class="p">(</span><span class="n">_data</span><span class="o">.</span><span class="n">clear</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="data"><a class="viewcode-back" href="../../api.html#check50.data">[docs]</a><span class="k">def</span> <span class="nf">data</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Add data to the check payload</span>
+
+<span class="sd">    :params kwargs: key/value mappings to be added to the check payload</span>
+
+<span class="sd">    Example usage::</span>
+
+<span class="sd">        check50.data(time=7.3, mem=23)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">_data</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="include"><a class="viewcode-back" href="../../api.html#check50.include">[docs]</a><span class="k">def</span> <span class="nf">include</span><span class="p">(</span><span class="o">*</span><span class="n">paths</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Copy files/directories from the check directory (:data:`check50.internal.check_dir`), to the current directory</span>
+
+<span class="sd">    :params paths: files/directories to be copied</span>
+
+<span class="sd">    Example usage::</span>
+
+<span class="sd">        check50.include(&quot;foo.txt&quot;, &quot;bar.txt&quot;)</span>
+<span class="sd">        assert os.path.exists(&quot;foo.txt&quot;) and os.path.exists(&quot;bar.txt&quot;)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">cwd</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">paths</span><span class="p">:</span>
+        <span class="n">_copy</span><span class="p">((</span><span class="n">internal</span><span class="o">.</span><span class="n">check_dir</span> <span class="o">/</span> <span class="n">path</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">(),</span> <span class="n">cwd</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="hash"><a class="viewcode-back" href="../../api.html#check50.hash">[docs]</a><span class="k">def</span> <span class="nf">hash</span><span class="p">(</span><span class="n">file</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Hashes file using SHA-256.</span>
+
+<span class="sd">    :param file: name of file to be hashed</span>
+<span class="sd">    :type file: str</span>
+<span class="sd">    :rtype: str</span>
+<span class="sd">    :raises check50.Failure: if ``file`` does not exist</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">exists</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+    <span class="n">log</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;hashing </span><span class="si">{}</span><span class="s2">...&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">file</span><span class="p">))</span>
+
+    <span class="c1"># https://stackoverflow.com/a/22058673</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">sha256</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">block</span> <span class="ow">in</span> <span class="nb">iter</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">65536</span><span class="p">),</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
+            <span class="n">sha256</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">block</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">sha256</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="exists"><a class="viewcode-back" href="../../api.html#check50.exists">[docs]</a><span class="k">def</span> <span class="nf">exists</span><span class="p">(</span><span class="o">*</span><span class="n">paths</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Assert that all given paths exist.</span>
+
+<span class="sd">    :params paths: files/directories to be checked for existence</span>
+<span class="sd">    :raises check50.Failure: if any ``path in paths`` does not exist</span>
+
+<span class="sd">    Example usage::</span>
+
+<span class="sd">        check50.exists(&quot;foo.c&quot;, &quot;foo.h&quot;)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">paths</span><span class="p">:</span>
+        <span class="n">log</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;checking that </span><span class="si">{}</span><span class="s2"> exists...&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">path</span><span class="p">))</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">Failure</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;</span><span class="si">{path}</span><span class="s2"> not found&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="import_checks"><a class="viewcode-back" href="../../api.html#check50.import_checks">[docs]</a><span class="k">def</span> <span class="nf">import_checks</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Import checks module given relative path.</span>
+
+<span class="sd">    :param path: relative path from which to import checks module</span>
+<span class="sd">    :type path: str</span>
+<span class="sd">    :returns: the imported module</span>
+<span class="sd">    :raises FileNotFoundError: if ``path / .check50.yaml`` does not exist</span>
+<span class="sd">    :raises yaml.YAMLError: if ``path / .check50.yaml`` is not a valid YAML file</span>
+
+<span class="sd">    This function is particularly useful when a set of checks logically extends</span>
+<span class="sd">    another, as is often the case in CS50&#39;s own problems that have a &quot;less comfy&quot;</span>
+<span class="sd">    and &quot;more comfy&quot; version. The &quot;more comfy&quot; version can include all of the</span>
+<span class="sd">    &quot;less comfy&quot; checks like so::</span>
+
+<span class="sd">        less = check50.import_checks(&quot;../less&quot;)</span>
+<span class="sd">        from less import *</span>
+
+<span class="sd">    .. note::</span>
+<span class="sd">        the ``__name__`` of the imported module is given by the basename</span>
+<span class="sd">        of the specified path (``less`` in the above example).</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nb">dir</span> <span class="o">=</span> <span class="n">internal</span><span class="o">.</span><span class="n">check_dir</span> <span class="o">/</span> <span class="n">path</span>
+    <span class="n">file</span> <span class="o">=</span> <span class="n">internal</span><span class="o">.</span><span class="n">load_config</span><span class="p">(</span><span class="nb">dir</span><span class="p">)[</span><span class="s2">&quot;checks&quot;</span><span class="p">]</span>
+    <span class="n">mod</span> <span class="o">=</span> <span class="n">internal</span><span class="o">.</span><span class="n">import_file</span><span class="p">(</span><span class="nb">dir</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="p">(</span><span class="nb">dir</span> <span class="o">/</span> <span class="n">file</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">())</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="nb">dir</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">mod</span>
+    <span class="k">return</span> <span class="n">mod</span></div>
+
+
+<div class="viewcode-block" id="run"><a class="viewcode-back" href="../../api.html#check50.run">[docs]</a><span class="k">class</span> <span class="nc">run</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Run a command.</span>
+
+<span class="sd">    :param command: command to be run</span>
+<span class="sd">    :param env: environment in which to run command</span>
+<span class="sd">    :type command: str</span>
+<span class="sd">    :type env: dict</span>
+
+<span class="sd">    By default, the command will be run using the same environment as ``check50``, these mappings may be overriden via the ``env`` parameter::</span>
+
+<span class="sd">        check50.run(&quot;./foo&quot;).stdin(&quot;foo&quot;).stdout(&quot;bar&quot;).exit(0)</span>
+<span class="sd">        check50.run(&quot;./foo&quot;, env={ &quot;HOME&quot;: &quot;/&quot; }).stdin(&quot;foo&quot;).stdout(&quot;bar&quot;).exit(0)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">,</span> <span class="n">env</span><span class="o">=</span><span class="p">{}):</span>
+        <span class="n">log</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;running </span><span class="si">{}</span><span class="s2">...&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">command</span><span class="p">))</span>
+
+        <span class="n">full_env</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">full_env</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">env</span><span class="p">)</span>
+
+        <span class="c1"># Workaround for OSX pexpect bug http://pexpect.readthedocs.io/en/stable/commonissues.html#truncated-output-just-before-child-exits</span>
+        <span class="c1"># Workaround from https://github.com/pexpect/pexpect/issues/373</span>
+        <span class="n">command</span> <span class="o">=</span> <span class="s2">&quot;bash -c </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">shlex</span><span class="o">.</span><span class="n">quote</span><span class="p">(</span><span class="n">command</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">process</span> <span class="o">=</span> <span class="n">pexpect</span><span class="o">.</span><span class="n">spawn</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">,</span> <span class="n">echo</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">env</span><span class="o">=</span><span class="n">full_env</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="run.stdin"><a class="viewcode-back" href="../../api.html#check50.run.stdin">[docs]</a>    <span class="k">def</span> <span class="nf">stdin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">,</span> <span class="n">prompt</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Send line to stdin, optionally expect a prompt.</span>
+
+<span class="sd">        :param line: line to be send to stdin</span>
+<span class="sd">        :type line: str</span>
+<span class="sd">        :param prompt: boolean indicating whether a prompt is expected, if True absorbs all of stdout before inserting line into stdin and raises :class:`check50.Failure` if stdout is empty</span>
+<span class="sd">        :type prompt: bool</span>
+<span class="sd">        :param timeout: maximum number of seconds to wait for prompt</span>
+<span class="sd">        :type timeout: int / float</span>
+<span class="sd">        :raises check50.Failure: if ``prompt`` is set to True and no prompt is given</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">line</span> <span class="o">==</span> <span class="n">EOF</span><span class="p">:</span>
+            <span class="n">log</span><span class="p">(</span><span class="s2">&quot;sending EOF...&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">log</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;sending input </span><span class="si">{}</span><span class="s2">...&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">line</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="n">prompt</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">process</span><span class="o">.</span><span class="n">expect</span><span class="p">(</span><span class="s2">&quot;.+&quot;</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span>
+            <span class="k">except</span> <span class="p">(</span><span class="n">TIMEOUT</span><span class="p">,</span> <span class="n">EOF</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="n">Failure</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;expected prompt for input, found none&quot;</span><span class="p">))</span>
+            <span class="k">except</span> <span class="ne">UnicodeDecodeError</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">Failure</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;output not valid ASCII text&quot;</span><span class="p">))</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">line</span> <span class="o">==</span> <span class="n">EOF</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">process</span><span class="o">.</span><span class="n">sendeof</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">process</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">OSError</span><span class="p">:</span>
+            <span class="k">pass</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+<div class="viewcode-block" id="run.stdout"><a class="viewcode-back" href="../../api.html#check50.run.stdout">[docs]</a>    <span class="k">def</span> <span class="nf">stdout</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">str_output</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">regex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieve all output from stdout until timeout (3 sec by default). If ``output`` is None, ``stdout`` returns all of the stdout outputted by the process, else it returns ``self``.</span>
+
+<span class="sd">        :param output: optional output to be expected from stdout, raises :class:`check50.Failure` if no match</span>
+<span class="sd">        :type output: str</span>
+<span class="sd">        :param str_output: what will be displayed as expected output, a human readable form of ``output``</span>
+<span class="sd">        :type str_output: str</span>
+<span class="sd">        :param regex: flag indicating whether ``output`` should be treated as a regex</span>
+<span class="sd">        :type regex: bool</span>
+<span class="sd">        :param timeout: maximum number of seconds to wait for ``output``</span>
+<span class="sd">        :type timeout: int / float</span>
+<span class="sd">        :raises check50.Mismatch: if ``output`` is specified and nothing that the process output matches it</span>
+<span class="sd">        :raises check50.Failure: if process times out or if it outputs invalid UTF-8 text.</span>
+
+<span class="sd">        Example usage::</span>
+
+<span class="sd">            check50.run(&quot;./hello&quot;).stdout(&quot;[Hh]ello, world!?&quot;, &quot;hello, world&quot;).exit()</span>
+
+<span class="sd">            output = check50.run(&quot;./hello&quot;).stdout()</span>
+<span class="sd">            if not re.match(&quot;[Hh]ello, world!?&quot;, output):</span>
+<span class="sd">                raise check50.Mismatch(&quot;hello, world&quot;, output)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">output</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_wait</span><span class="p">(</span><span class="n">timeout</span><span class="p">)</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">process</span><span class="o">.</span><span class="n">before</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\r\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">output</span> <span class="o">=</span> <span class="n">output</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+            <span class="k">pass</span>
+
+        <span class="n">expect</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">process</span><span class="o">.</span><span class="n">expect</span> <span class="k">if</span> <span class="n">regex</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">process</span><span class="o">.</span><span class="n">expect_exact</span>
+
+        <span class="k">if</span> <span class="n">str_output</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">str_output</span> <span class="o">=</span> <span class="n">output</span>
+
+        <span class="k">if</span> <span class="n">output</span> <span class="o">==</span> <span class="n">EOF</span><span class="p">:</span>
+            <span class="n">log</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;checking for EOF...&quot;</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">output</span> <span class="o">=</span> <span class="n">output</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\r\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">log</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;checking for output </span><span class="se">\&quot;</span><span class="si">{}</span><span class="se">\&quot;</span><span class="s2">...&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">str_output</span><span class="p">))</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">expect</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">EOF</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">process</span><span class="o">.</span><span class="n">before</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">process</span><span class="o">.</span><span class="n">buffer</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">process</span><span class="o">.</span><span class="n">after</span> <span class="o">!=</span> <span class="n">EOF</span><span class="p">:</span>
+                <span class="n">result</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">process</span><span class="o">.</span><span class="n">after</span>
+            <span class="k">raise</span> <span class="n">Mismatch</span><span class="p">(</span><span class="n">str_output</span><span class="p">,</span> <span class="n">result</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\r\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">))</span>
+        <span class="k">except</span> <span class="n">TIMEOUT</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">Failure</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;did not find </span><span class="se">\&quot;</span><span class="si">{}</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">_raw</span><span class="p">(</span><span class="n">str_output</span><span class="p">)))</span>
+        <span class="k">except</span> <span class="ne">UnicodeDecodeError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">Failure</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;output not valid ASCII text&quot;</span><span class="p">))</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">Failure</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;check50 could not verify output&quot;</span><span class="p">))</span>
+
+        <span class="c1"># If we expected EOF and we still got output, report an error.</span>
+        <span class="k">if</span> <span class="n">output</span> <span class="o">==</span> <span class="n">EOF</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">process</span><span class="o">.</span><span class="n">before</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">Mismatch</span><span class="p">(</span><span class="n">EOF</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">process</span><span class="o">.</span><span class="n">before</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\r\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+<div class="viewcode-block" id="run.reject"><a class="viewcode-back" href="../../api.html#check50.run.reject">[docs]</a>    <span class="k">def</span> <span class="nf">reject</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Check that the process survives for timeout. Useful for checking whether program is waiting on input.</span>
+
+<span class="sd">        :param timeout: number of seconds to wait</span>
+<span class="sd">        :type timeout: int / float</span>
+<span class="sd">        :raises check50.Failure: if process ends before ``timeout``</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">log</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;checking that input was rejected...&quot;</span><span class="p">))</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_wait</span><span class="p">(</span><span class="n">timeout</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">Failure</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">__cause__</span><span class="p">,</span> <span class="n">TIMEOUT</span><span class="p">):</span>
+                <span class="k">raise</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">Failure</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;expected program to reject input, but it did not&quot;</span><span class="p">))</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+<div class="viewcode-block" id="run.exit"><a class="viewcode-back" href="../../api.html#check50.run.exit">[docs]</a>    <span class="k">def</span> <span class="nf">exit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">code</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Wait for process to exit or until timeout (5 sec by default) and asserts that process exits with ``code``. If ``code`` is ``None``, returns the code the process exited with.</span>
+
+<span class="sd">        ..note:: In order to ensure that spawned child processes do not outlive the check that spawned them, it is good practice to call either method (with no arguments if the exit code doesn&#39;t matter) or ``.kill()`` on every spawned process.</span>
+
+<span class="sd">        :param code: code to assert process exits with</span>
+<span class="sd">        :type code: int</span>
+<span class="sd">        :param timeout: maximum number of seconds to wait for the program to end</span>
+<span class="sd">        :type timeout: int / float</span>
+<span class="sd">        :raises check50.Failure: if ``code`` is given and does not match the actual exitcode within ``timeout``</span>
+
+<span class="sd">        Example usage::</span>
+
+<span class="sd">            check50.run(&quot;./hello&quot;).exit(0)</span>
+
+<span class="sd">            code = check50.run(&quot;./hello&quot;).exit()</span>
+<span class="sd">            if code != 0:</span>
+<span class="sd">                raise check50.Failure(f&quot;expected exit code 0, not {code}&quot;)</span>
+
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_wait</span><span class="p">(</span><span class="n">timeout</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">code</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">exitcode</span>
+
+        <span class="n">log</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;checking that program exited with status </span><span class="si">{}</span><span class="s2">...&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">code</span><span class="p">))</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">exitcode</span> <span class="o">!=</span> <span class="n">code</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">Failure</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;expected exit code </span><span class="si">{}</span><span class="s2">, not </span><span class="si">{}</span><span class="s2">&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">code</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">exitcode</span><span class="p">))</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+<div class="viewcode-block" id="run.kill"><a class="viewcode-back" href="../../api.html#check50.run.kill">[docs]</a>    <span class="k">def</span> <span class="nf">kill</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Kill the process.</span>
+
+<span class="sd">        Child will first be sent a ``SIGHUP``, followed by a ``SIGINT`` and</span>
+<span class="sd">        finally a ``SIGKILL`` if it ignores the first two.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">process</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+    <span class="k">def</span> <span class="nf">_wait</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">process</span><span class="o">.</span><span class="n">expect</span><span class="p">(</span><span class="n">EOF</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">TIMEOUT</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">Failure</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;timed out while waiting for program to exit&quot;</span><span class="p">))</span> <span class="kn">from</span> <span class="nn">TIMEOUT</span><span class="p">(</span><span class="n">timeout</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">UnicodeDecodeError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">Failure</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;output not valid ASCII text&quot;</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">kill</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">process</span><span class="o">.</span><span class="n">signalstatus</span> <span class="o">==</span> <span class="n">signal</span><span class="o">.</span><span class="n">SIGSEGV</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">Failure</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;failed to execute program due to segmentation fault&quot;</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">exitcode</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">process</span><span class="o">.</span><span class="n">exitstatus</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+
+<div class="viewcode-block" id="Failure"><a class="viewcode-back" href="../../api.html#check50.Failure">[docs]</a><span class="k">class</span> <span class="nc">Failure</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Exception signifying check failure.</span>
+
+<span class="sd">    :param rationale: message to be displayed capturing why the check failed</span>
+<span class="sd">    :type rationale: str</span>
+<span class="sd">    :param help: optional help message to be displayed</span>
+<span class="sd">    :type help: str</span>
+
+<span class="sd">    Example usage::</span>
+
+<span class="sd">        out = check50.run(&quot;./cash&quot;).stdin(&quot;4.2&quot;).stdout()</span>
+<span class="sd">        if 10 not in out:</span>
+<span class="sd">            help = None</span>
+<span class="sd">            if 11 in out:</span>
+<span class="sd">                help = &quot;did you forget to round your result?&quot;</span>
+<span class="sd">            raise check50.Failure(&quot;Expected a different result&quot;, help=help)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rationale</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">payload</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;rationale&quot;</span><span class="p">:</span> <span class="n">rationale</span><span class="p">,</span> <span class="s2">&quot;help&quot;</span><span class="p">:</span> <span class="n">help</span><span class="p">}</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">payload</span><span class="p">[</span><span class="s2">&quot;rationale&quot;</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="Mismatch"><a class="viewcode-back" href="../../api.html#check50.Mismatch">[docs]</a><span class="k">class</span> <span class="nc">Mismatch</span><span class="p">(</span><span class="n">Failure</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Exception signifying check failure due to a mismatch in expected and actual outputs.</span>
+
+<span class="sd">    :param expected: the expected value</span>
+<span class="sd">    :param actual: the actual value</span>
+<span class="sd">    :param help: optional help message to be displayed</span>
+<span class="sd">    :type help: str</span>
+
+<span class="sd">    Example usage::</span>
+
+<span class="sd">        from re import match</span>
+<span class="sd">        expected = &quot;[Hh]ello, world!?\\n&quot;</span>
+<span class="sd">        actual = check50.run(&quot;./hello&quot;).stdout()</span>
+<span class="sd">        if not match(expected, actual):</span>
+<span class="sd">            help = None</span>
+<span class="sd">            if match(expected[:-1], actual):</span>
+<span class="sd">                help = r&quot;did you forget a newline (&#39;\\n&#39;) at the end of your printf string?&quot;</span>
+<span class="sd">            raise check50.Mismatch(&quot;hello, world\\n&quot;, actual, help=help)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">expected</span><span class="p">,</span> <span class="n">actual</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">rationale</span><span class="o">=</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;expected </span><span class="se">\&quot;</span><span class="si">{}</span><span class="se">\&quot;</span><span class="s2">, not </span><span class="se">\&quot;</span><span class="si">{}</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">_raw</span><span class="p">(</span><span class="n">expected</span><span class="p">),</span> <span class="n">_raw</span><span class="p">(</span><span class="n">actual</span><span class="p">)),</span> <span class="n">help</span><span class="o">=</span><span class="n">help</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">payload</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s2">&quot;expected&quot;</span><span class="p">:</span> <span class="n">expected</span><span class="p">,</span> <span class="s2">&quot;actual&quot;</span><span class="p">:</span> <span class="n">actual</span><span class="p">})</span></div>
+
+
+<span class="k">def</span> <span class="nf">_raw</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Get raw representation of s, truncating if too long.&quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">_raw</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">s</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">s</span> <span class="o">==</span> <span class="n">EOF</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;EOF&quot;</span>
+
+    <span class="n">s</span> <span class="o">=</span> <span class="nb">repr</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>  <span class="c1"># Get raw representation of string</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">s</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># Strip away quotation marks</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">15</span><span class="p">:</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">s</span><span class="p">[:</span><span class="mi">15</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;...&quot;</span>  <span class="c1"># Truncate if too long</span>
+    <span class="k">return</span> <span class="n">s</span>
+
+
+<span class="k">def</span> <span class="nf">_copy</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">dst</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Copy src to dst, copying recursively if src is a directory.&quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">shutil</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">dst</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">IsADirectoryError</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">dst</span><span class="p">):</span>
+            <span class="n">dst</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dst</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">src</span><span class="p">))</span>
+        <span class="n">shutil</span><span class="o">.</span><span class="n">copytree</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">dst</span><span class="p">)</span>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, CS50.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
